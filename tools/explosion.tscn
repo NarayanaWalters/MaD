@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://tools/explosion.gd" type="Script" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 100.0
+
+[node name="Explosion" type="Area2D"]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+shape = SubResource( 1 )
+trigger = true
+_update_shape_index = 0
+
+[node name="Particles2D" type="Particles2D" parent="."]
+
+config/amount = 256
+config/lifetime = 0.6
+config/time_scale = 2.0
+config/emit_timeout = 0.1
+config/emitting = false
+config/process_mode = 1
+config/explosiveness = 0.01
+params/direction = 0.0
+params/spread = 180.0
+params/linear_velocity = 320.0
+params/spin_velocity = 300.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 9.78
+params/radial_accel = -500.0
+params/tangential_accel = 0.0
+params/damping = 100.0
+params/initial_angle = 0.0
+params/initial_size = 5.0
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+randomness/linear_velocity = 1.0
+randomness/initial_size = 5.0
+
+[node name="ParticleAttractor2D" type="ParticleAttractor2D" parent="Particles2D"]
+
+enabled = true
+radius = 60.0
+disable_radius = 0.0
+gravity = 100.0
+absorption = 0.0
+particles_path = NodePath("..")
+
+

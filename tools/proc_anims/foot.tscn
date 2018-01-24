@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://tools/proc_anims/proc_foot.gd" type="Script" id=1]
+
+
+[node name="Foot" type="Node2D"]
+
+transform/pos = Vector2( -73.6395, -6.43777e-06 )
+transform/rot = 180.0
+script/script = ExtResource( 1 )
+
+

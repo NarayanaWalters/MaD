@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://characters/missile/missile.gd" type="Script" id=1]
+[ext_resource path="res://tools/slow_aim.gd" type="Script" id=2]
+[ext_resource path="res://characters/missile/missile.png" type="Texture" id=3]
+[ext_resource path="res://tools/explosion.tscn" type="PackedScene" id=4]
+
+[node name="Missile" type="KinematicBody2D"]
+
+input/pickable = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+speed = 200
+
+[node name="Aimer" type="Node2D" parent="."]
+
+script/script = ExtResource( 2 )
+aim_at_player = true
+turn_speed = 2
+
+[node name="Particles2D" type="Particles2D" parent="Aimer"]
+
+editor/display_folded = true
+transform/pos = Vector2( 0, -28.3952 )
+transform/rot = -180.0
+config/amount = 128
+config/lifetime = 2.0
+config/process_mode = 1
+config/local_space = false
+params/direction = 0.0
+params/spread = 80.0
+params/linear_velocity = 30.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 0.0
+params/gravity_strength = 0.0
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 45.0
+params/initial_size = 5.0
+params/final_size = 0.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+
+[node name="ParticleAttractor2D" type="ParticleAttractor2D" parent="Aimer/Particles2D"]
+
+transform/pos = Vector2( -0.0600009, 37.8424 )
+enabled = true
+radius = 30.0
+disable_radius = 0.0
+gravity = 20.0
+absorption = 0.0
+particles_path = NodePath("..")
+
+[node name="Sprite" type="Sprite" parent="Aimer"]
+
+transform/pos = Vector2( 0, -14.1558 )
+transform/rot = 180.0
+transform/scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+
+[node name="Explosion" parent="." instance=ExtResource( 4 )]
+
+

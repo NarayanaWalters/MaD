@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://characters/player/player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://characters/basic_ai/basic_chase_ai.tscn" type="PackedScene" id=3]
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+
+process/pause_mode = 2
+transform/pos = Vector2( 389.067, 262.552 )
+
+[node name="Block" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 1120.36, 647.324 )
+
+[node name="Block1" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 1173.32, 87.4343 )
+
+[node name="Block2" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 162.939, 73.4401 )
+
+[node name="Block3" parent="." instance=ExtResource( 2 )]
+
+transform/pos = Vector2( 106.693, 588.439 )
+
+[node name="BasicChaseAI" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 1157.1, 492.101 )
+
+[node name="BasicChaseAI1" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 1245.72, 301.247 )
+
+[node name="BasicChaseAI2" parent="." instance=ExtResource( 3 )]
+
+transform/pos = Vector2( 691.33, 682.955 )
+
+

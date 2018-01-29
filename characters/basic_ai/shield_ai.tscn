@@ -1,13 +1,11 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=9 format=1]
 
 [ext_resource path="res://characters/basic_ai/basic_chase_ai.gd" type="Script" id=1]
 [ext_resource path="res://tools/health.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tools/slow_aim.gd" type="Script" id=3]
 [ext_resource path="res://characters/player/cockpit.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
-[ext_resource path="res://characters/missile_launcher/missile_launcher.tscn" type="PackedScene" id=6]
-[ext_resource path="res://characters/laser_lance/laser_lance.tscn" type="PackedScene" id=7]
-[ext_resource path="res://tools/proc_anims/proc_biped.tscn" type="PackedScene" id=8]
+[ext_resource path="res://tools/proc_anims/proc_biped.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -19,7 +17,7 @@ extents = Vector2( 26.8456, 25 )
 custom_solver_bias = 0.0
 extents = Vector2( 26.6343, 5.64195 )
 
-[node name="BasicChaseAI" type="KinematicBody2D"]
+[node name="Shield" type="KinematicBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -78,16 +76,6 @@ transform/scale = Vector2( 0.823263, 0.172935 )
 texture = ExtResource( 5 )
 modulate = Color( 0, 0, 0, 1 )
 
-[node name="MissileLauncher" parent="SlowAim" instance=ExtResource( 6 )]
-
-transform/pos = Vector2( -48.0558, 5.70154 )
-transform/rot = -41.4408
-
-[node name="LaserLance" parent="SlowAim" instance=ExtResource( 7 )]
-
-transform/pos = Vector2( -35.8382, 1.56654e-06 )
-transform/rot = 90.0
-
-[node name="ProceduralBiped" parent="." instance=ExtResource( 8 )]
+[node name="ProceduralBiped" parent="." instance=ExtResource( 6 )]
 
 

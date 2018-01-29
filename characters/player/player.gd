@@ -3,9 +3,10 @@ extends KinematicBody2D
 onready var anim_sprite = get_node("AnimatedSprite")
 onready var health = get_node("Health")
 
-var speed = 3
+var speed = 5
 
 func _ready():
+	set_meta("team", "player")
 	set_fixed_process(true)
 	anim_sprite.play("idle")
 	get_tree().set_pause(true)
@@ -45,4 +46,5 @@ func deal_damage(var dmg):
 
 func death():
 	get_tree().reload_current_scene()
-	#TODO delete arrows
+	get_tree().call_group(0, "arrows", "queue_free")
+	get_tree().call_group(0, "missiles", "queue_free")

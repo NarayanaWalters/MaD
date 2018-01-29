@@ -71,6 +71,12 @@ hp_regen_rate = 0.5
 
 [node name="ProceduralBiped" parent="." instance=ExtResource( 12 )]
 
+toe_size = 5
+stride_length = 50
+chassis_width = 70
+chassis_height = 15
+foot_move_speed = 18
+
 [node name="Sprite" type="Node2D" parent="."]
 
 editor/display_folded = true
@@ -121,15 +127,15 @@ script/script = ExtResource( 18 )
 anchor_mode = 1
 rotating = false
 current = true
-zoom = Vector2( 1, 1 )
+zoom = Vector2( 2, 2 )
 limit/left = -10000000
 limit/top = -10000000
 limit/right = 10000000
 limit/bottom = 10000000
 drag_margin/h_enabled = false
 drag_margin/v_enabled = false
-smoothing/enable = false
-smoothing/speed = 5.0
+smoothing/enable = true
+smoothing/speed = 20.0
 drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2

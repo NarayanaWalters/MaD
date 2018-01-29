@@ -18,6 +18,7 @@ var particles_life = 0
 func _ready():
 	particles_life = particles.get_lifetime()
 	add_to_group("enemies")
+	add_to_group("missiles")
 	set_fixed_process(true)
 
 func _fixed_process(delta):

@@ -1,25 +1,18 @@
-[gd_scene load_steps=11 format=1]
+[gd_scene load_steps=8 format=1]
 
 [ext_resource path="res://characters/basic_ai/basic_chase_ai.gd" type="Script" id=1]
 [ext_resource path="res://tools/health.tscn" type="PackedScene" id=2]
-[ext_resource path="res://tools/slow_aim.gd" type="Script" id=3]
-[ext_resource path="res://characters/player/cockpit.png" type="Texture" id=4]
-[ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://tools/proc_anims/proc_biped.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tools/slow_aim.gd" type="Script" id=4]
+[ext_resource path="res://characters/player/cockpit.png" type="Texture" id=5]
 [ext_resource path="res://characters/missile_launcher/missile_launcher.tscn" type="PackedScene" id=6]
-[ext_resource path="res://characters/laser_lance/laser_lance.tscn" type="PackedScene" id=7]
-[ext_resource path="res://tools/proc_anims/proc_biped.tscn" type="PackedScene" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 26.8456, 25 )
 
-[sub_resource type="RectangleShape2D" id=2]
-
-custom_solver_bias = 0.0
-extents = Vector2( 26.6343, 5.64195 )
-
-[node name="BasicChaseAI" type="KinematicBody2D"]
+[node name="Artillery" type="KinematicBody2D"]
 
 input/pickable = false
 shapes/0/shape = SubResource( 1 )
@@ -43,17 +36,19 @@ shape = SubResource( 1 )
 trigger = false
 _update_shape_index = 0
 
+[node name="ProceduralBiped" parent="." instance=ExtResource( 3 )]
+
+transform/rot = 180.0
+stride_length = 45
+
 [node name="SlowAim" type="KinematicBody2D" parent="."]
 
 transform/rot = -90.0
 input/pickable = false
-shapes/0/shape = SubResource( 2 )
-shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 50 )
-shapes/0/trigger = false
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = ExtResource( 3 )
+script/script = ExtResource( 4 )
 aim_at_player = true
 turn_speed = 2
 
@@ -61,33 +56,13 @@ turn_speed = 2
 
 transform/pos = Vector2( 0.814499, -3.56029e-08 )
 transform/rot = -2.79008
-texture = ExtResource( 4 )
-modulate = Color( 0.703125, 0, 0, 1 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SlowAim"]
-
-transform/pos = Vector2( 0, 50 )
-shape = SubResource( 2 )
-trigger = false
-_update_shape_index = 0
-
-[node name="Sprite" type="Sprite" parent="SlowAim"]
-
-transform/pos = Vector2( -0.308839, 49.9491 )
-transform/scale = Vector2( 0.823263, 0.172935 )
 texture = ExtResource( 5 )
-modulate = Color( 0, 0, 0, 1 )
+modulate = Color( 0.703125, 0, 0, 1 )
 
 [node name="MissileLauncher" parent="SlowAim" instance=ExtResource( 6 )]
 
 transform/pos = Vector2( -48.0558, 5.70154 )
 transform/rot = -41.4408
-
-[node name="LaserLance" parent="SlowAim" instance=ExtResource( 7 )]
-
-transform/pos = Vector2( -35.8382, 1.56654e-06 )
-transform/rot = 90.0
-
-[node name="ProceduralBiped" parent="." instance=ExtResource( 8 )]
+fire_rate = 5
 
 

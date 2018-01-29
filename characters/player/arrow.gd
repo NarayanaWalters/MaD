@@ -1,12 +1,12 @@
 extends KinematicBody2D
 
-var time_to_delete_after = 4.0
+var time_to_delete_after = 15.0
 var time_alive = 0
 
 var start_r = 0
 
 var max_speed = 2000
-var min_speed = 700
+var min_speed = 1900
 var speed = 1000
 var curve_speed = 0
 var curve_power = 0

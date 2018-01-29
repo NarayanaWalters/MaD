@@ -16,13 +16,18 @@ var osc_speed = 10
 var osc_angle = 15
 var last_osc = 0
 
+
+var foot_move_speed = 15
 var foot1_last_pos = Vector2()
 var foot2_last_pos = Vector2()
 
 var foot1_start_pos = Vector2()
 var foot2_start_pos = Vector2()
 
+var zoom = 1
+
 func _ready():
+	add_to_group("zoom_affected")
 	foot1_last_pos = foot1.get_global_pos()
 	foot2_last_pos = foot2.get_global_pos()
 	foot1_start_pos = foot1.get_pos()
@@ -37,14 +42,15 @@ func _draw():
 	var l_hip_pos = Vector2(chassis_width / -2, 0)
 	var r_hip_pos = Vector2(chassis_width / 2,  0)
 	
+	#calc oscillation
 	var h_b = sin(cur_time * osc_speed)
 	var hinge1_pos = Vector2(foot1_start_pos.x, -h_b * hinge_back_dis + foot1_start_pos.y)
 	var hinge2_pos = Vector2(foot2_start_pos.x, h_b * hinge_back_dis + foot2_start_pos.y)
 	
-	draw_line(l_hip_pos, hinge1_pos, Color(0, 0, 0), leg_width)
-	draw_line(r_hip_pos, hinge2_pos, Color(0, 0, 0), leg_width)
-	draw_line(hinge1_pos, foot1.get_pos(), Color(0, 0, 0), leg_width)
-	draw_line(hinge2_pos, foot2.get_pos(), Color(0, 0, 0), leg_width)
+	draw_line(l_hip_pos, hinge1_pos, Color(0, 0, 0), leg_width / zoom)
+	draw_line(r_hip_pos, hinge2_pos, Color(0, 0, 0), leg_width / zoom)
+	draw_line(hinge1_pos, foot1.get_pos(), Color(0, 0, 0), leg_width / zoom)
+	draw_line(hinge2_pos, foot2.get_pos(), Color(0, 0, 0), leg_width / zoom)
 
 func _process(delta):
 	var f1_r = foot1.get_global_rot()
@@ -72,13 +78,15 @@ func _process(delta):
 		var pos = foot1.get_pos()
 		var goal_pos = Vector2(foot1_start_pos.x, stride_length)
 		var offset = goal_pos - pos
-		pos += offset.normalized() * osc_speed
+		pos = move_towards(pos, goal_pos)
+		#pos += offset.normalized() * foot_move_speed
 		foot1.set_pos(pos)
 	if foot2.is_raised:
 		var pos = foot2.get_pos()
 		var goal_pos = Vector2(foot2_start_pos.x, stride_length)
 		var offset = goal_pos - pos
-		pos += offset.normalized() * osc_speed
+		pos = move_towards(pos, goal_pos)
+		#pos += offset.normalized() * foot_move_speed
 		foot2.set_pos(pos)
 	
 	last_pos = pos
@@ -86,6 +94,16 @@ func _process(delta):
 	foot2_last_pos = foot2.get_global_pos()
 	
 	update()
+
+func move_towards(var pos, var goal_pos):
+	var offset = goal_pos - pos
+	var dis = offset.normalized() * foot_move_speed
+	pos += dis
+	var dis_l = dis.length_squared()
+	var offset_l = offset.length_squared()
+	if dis_l > offset_l:
+		pos = goal_pos
+	return pos
 
 
 func calc_angle():
@@ -114,3 +132,6 @@ func calc_angle():
 	# add that angle to the oscillation
 	set_global_rotd(cur_osc + new_angle)
 	last_osc = cur_osc
+
+func set_zoom(var z):
+	zoom = z

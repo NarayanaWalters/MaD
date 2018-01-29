@@ -1,23 +1,37 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://tools/proc_anims/biped_chassis.gd" type="Script" id=1]
-[ext_resource path="res://tools/proc_anims/foot.tscn" type="PackedScene" id=2]
-
-
+[ext_resource path="res://tools/proc_anims/proc_biped.gd" type="Script" id=1]
+[ext_resource path="res://tools/proc_anims/biped_chassis.gd" type="Script" id=2]
+[ext_resource path="res://tools/proc_anims/foot.tscn" type="PackedScene" id=3]
 
 [node name="ProceduralBiped" type="Node2D"]
 
+transform/rot = -180.0
+script/script = ExtResource( 1 )
+foot_size = 10
+toe_size = 6
+stride_length = 70
+chassis_width = 60
+chassis_height = 20
+leg_width = 3
+hinge_back_dis = 10
+osc_speed = 10
+osc_angle = 10
+foot_move_speed = 10
+
 [node name="Chassis" type="Node2D" parent="."]
 
-transform/rot = 180.0
-script/script = ExtResource( 1 )
+transform/rot = -180.0
+script/script = ExtResource( 2 )
 
-[node name="Foot1" parent="Chassis" instance=ExtResource( 2 )]
+[node name="Foot1" parent="Chassis" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( -40, -30 )
+transform/rot = -180.0
 
-[node name="Foot2" parent="Chassis" instance=ExtResource( 2 )]
+[node name="Foot2" parent="Chassis" instance=ExtResource( 3 )]
 
 transform/pos = Vector2( 40, -30 )
+transform/rot = -180.0
 
 

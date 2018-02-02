@@ -1,5 +1,7 @@
 extends Node2D
 
+var foot_scene = preload("res://tools/proc_anims/foot.tscn")
+
 onready var foot1 = get_node("Foot1")
 onready var foot2 = get_node("Foot2")
 
@@ -21,17 +23,31 @@ var foot_move_speed = 15
 var foot1_last_pos = Vector2()
 var foot2_last_pos = Vector2()
 
+var foot1_start_pos_orig = Vector2()
+var foot2_start_pos_orig = Vector2()
+
 var foot1_start_pos = Vector2()
 var foot2_start_pos = Vector2()
 
+var foot1_was_raised = false
+var foot2_was_raised = false
+
 var zoom = 1
+
+var foot_place_var = 10
+
+var is_paused = false
 
 func _ready():
 	add_to_group("zoom_affected")
 	foot1_last_pos = foot1.get_global_pos()
 	foot2_last_pos = foot2.get_global_pos()
-	foot1_start_pos = foot1.get_pos()
-	foot2_start_pos = foot2.get_pos()
+	foot1_start_pos_orig = foot1.get_pos()
+	foot2_start_pos_orig = foot2.get_pos()
+	
+	foot1_start_pos = foot1_start_pos_orig
+	foot2_start_pos = foot2_start_pos_orig
+	
 	set_process(true)
 
 func _draw():
@@ -74,6 +90,8 @@ func _process(delta):
 		foot2.set_global_rot(f2_r)
 		foot2.set_global_pos(foot2_last_pos)
 	
+	
+	
 	if foot1.is_raised:
 		var pos = foot1.get_pos()
 		var goal_pos = Vector2(foot1_start_pos.x, stride_length)
@@ -93,7 +111,32 @@ func _process(delta):
 	foot1_last_pos = foot1.get_global_pos()
 	foot2_last_pos = foot2.get_global_pos()
 	
+	if !foot1.is_raised and foot1_was_raised:
+		var foot = foot_scene.instance()
+		get_tree().get_root().add_child(foot)
+		foot.alpha = 0.2
+		foot.delete_after_time = true
+		foot.set_global_rot(f1_r)
+		foot.set_global_pos(foot1_last_pos)
+		
+		foot1_start_pos = foot1_start_pos_orig + rand_vec2()
+	if !foot2.is_raised and foot2_was_raised:
+		var foot = foot_scene.instance()
+		get_tree().get_root().add_child(foot)
+		foot.alpha = 0.2
+		foot.delete_after_time = true
+		foot.set_global_rot(f2_r)
+		foot.set_global_pos(foot2_last_pos)
+		foot2_start_pos = foot2_start_pos_orig + rand_vec2()
+	
+	foot1_was_raised = foot1.is_raised
+	foot2_was_raised = foot2.is_raised
 	update()
+
+func rand_vec2():
+	var x = randi() % (foot_place_var * 2) - foot_place_var
+	var y = randi() % (foot_place_var * 2) - foot_place_var
+	return Vector2(x, y)
 
 func move_towards(var pos, var goal_pos):
 	var offset = goal_pos - pos
@@ -135,3 +178,14 @@ func calc_angle():
 
 func set_zoom(var z):
 	zoom = z
+
+var s_f1_pos = Vector2()
+var s_f2_pos = Vector2()
+func save_state():
+	s_f1_pos = foot1.get_pos()
+	s_f2_pos = foot2.get_pos()
+func restore_state():
+	foot1.set_pos(s_f1_pos)
+	foot2.set_pos(s_f2_pos)
+	foot1_last_pos = foot1.get_global_pos()
+	foot2_last_pos = foot2.get_global_pos()

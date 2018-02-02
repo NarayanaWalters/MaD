@@ -8,6 +8,11 @@ var is_raised = false
 
 var zoom = 1
 
+var alpha = 1
+var delete_after_time = false
+var life_span = 5.0
+var cur_time = 0
+
 func _ready():
 	add_to_group("zoom_affected")
 	set_process(true)
@@ -16,9 +21,17 @@ func _draw():
 	draw_foot()
 
 func _process(delta):
+	if delete_after_time:
+		cur_time += delta
+		if cur_time >= life_span:
+			queue_free()
+	
 	update()
 
 func draw_foot():
+	var alph = alpha
+	if delete_after_time:
+		alph = lerp(alpha, 0, cur_time / life_span)
 	var adj_toe_size = toe_size
 	
 	var adj_foot_size = foot_size
@@ -26,7 +39,7 @@ func draw_foot():
 		adj_toe_size *= raised_scale
 		adj_foot_size *= raised_scale
 	
-	var blk = Color(0, 0, 0)
+	var blk = Color(0, 0, 0, alph)
 	var t_size = Vector2(adj_toe_size, adj_toe_size) / zoom
 	var t_half = adj_toe_size / 2
 	

@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 onready var health = get_node("Health")
+var death_expl = preload("res://tools/fiery_explosion.tscn")
 
 export var speed = 200
 
@@ -43,3 +44,9 @@ func deal_damage(var dmg):
 
 func set_player(var p):
 	player = p
+
+func death():
+	var expl = death_expl.instance()
+	get_tree().get_root().add_child(expl)
+	expl.set_global_pos(get_global_pos())
+	queue_free()

@@ -50,3 +50,7 @@ func _fixed_process(delta):
 
 func set_player(var p):
 	target = p
+
+func deal_damage(var d):
+	expl.explode()
+	queue_free()

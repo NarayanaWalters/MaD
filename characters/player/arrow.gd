@@ -3,6 +3,8 @@ extends KinematicBody2D
 var time_to_delete_after = 15.0
 var time_alive = 0
 
+var delete_dist = 10000
+
 var start_r = 0
 
 var max_speed = 2000
@@ -18,8 +20,8 @@ var min_impale = 6
 var impale_amount = 12
 var impale_variance = 4
 
-var max_dmg = 25
-var min_dmg = 10
+var max_dmg = 40
+var min_dmg = 30
 var cur_dmg = 20
 
 var hit_something = false
@@ -45,8 +47,12 @@ func _fixed_process(delta):
 	
 	var pos = get_global_pos()
 	var space_state = get_world_2d().get_direct_space_state()
-	var result = space_state.intersect_ray( last_pos, pos , objs_to_ignore)
+	var result = space_state.intersect_ray( last_pos, pos , objs_to_ignore, 1)
+	var result2 = space_state.intersect_ray( last_pos, pos , objs_to_ignore, 2)
 	
+	if not result2.empty():
+		if result2.collider.has_method("deal_damage"):
+			result2.collider.deal_damage(cur_dmg)
 	
 	if not result.empty():
 		var r = get_global_rot()
@@ -64,8 +70,10 @@ func _fixed_process(delta):
 		if result.collider.has_method("deal_damage"):
 			result.collider.deal_damage(cur_dmg)
 	
-	time_alive += delta
-	if time_alive > time_to_delete_after:
+	if player == null:
+		return
+	var dis = player.get_global_pos().distance_squared_to(get_global_pos())
+	if dis > delete_dist * delete_dist:
 		remove_from_group("arrows")
 		queue_free()
 
@@ -91,11 +99,13 @@ func set_power(var p, var c):
 func set_player_ref(var p):
 	player = p
 
-func return_to_player():
+func return_to_player(var p_pos):
 	if hit_something:
 		return
 	
-	var p_pos = player.get_global_pos() + Vector2(0, -20)
+	#set_global_pos(p_pos)
+	#speed = 0
+	#return
 	var pos = get_global_pos()
 	var angle = angle_between_vecs(pos, p_pos)
 	start_r = angle

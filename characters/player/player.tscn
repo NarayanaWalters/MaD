@@ -75,17 +75,19 @@ toe_size = 5
 stride_length = 50
 chassis_width = 70
 chassis_height = 15
+osc_speed = 12
+osc_angle = 12
 foot_move_speed = 18
 
 [node name="Sprite" type="Node2D" parent="."]
 
-editor/display_folded = true
 script/script = ExtResource( 13 )
 aim_at_player = false
 turn_speed = 10
 
 [node name="Bow" type="Node2D" parent="Sprite"]
 
+editor/display_folded = true
 transform/pos = Vector2( 20.3571, 4.51515 )
 script/script = ExtResource( 14 )
 
@@ -120,6 +122,7 @@ texture = ExtResource( 17 )
 
 [node name="CameraRoot" type="Node2D" parent="."]
 
+editor/display_folded = true
 script/script = ExtResource( 18 )
 
 [node name="Camera2D" type="Camera2D" parent="CameraRoot"]
@@ -142,3 +145,4 @@ drag_margin/right = 0.2
 drag_margin/bottom = 0.2
 
 
+[editable path="ProceduralBiped"]

@@ -32,6 +32,10 @@ var bow_mid_x = 60
 
 var zoom = 1
 
+var last_arrow = null
+
+var last_tele = false
+
 func _ready():
 	add_to_group("zoom_affected")
 	arrow_sprite_pos = arrow_sprite.get_pos()
@@ -101,10 +105,18 @@ func _process(delta):
 
 	calc_draw(delta)
 	
-	if Input.is_action_pressed("return"):
-		get_tree().call_group(0, "arrows", "return_to_player")
+	var tele = Input.is_action_pressed("return")
+	if tele and !last_tele:
+		get_tree().call_group(0, "arrows", "return_to_player", get_global_pos())
+		if last_arrow != null:
+			var la_pos = last_arrow.get_global_pos()
+			var r = get_parent().get_parent()
+			var p_pos = r.get_global_pos()
+			r.teleport(la_pos)
+			
 	update()
 	
+	last_tele = tele
 
 func calc_curve(var a):
 	var cur_angle = get_global_rotd()
@@ -142,6 +154,7 @@ func fire():
 	
 	var arrow = arrow_scene.instance()
 	get_tree().get_root().add_child(arrow)
+	last_arrow = arrow
 	arrow.set_global_rot(get_global_rot())
 	arrow.set_global_pos(arrow_sprite.get_global_pos())
 	arrow.set_power(calc_power_from_draw(), curve_power)

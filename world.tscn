@@ -12,7 +12,7 @@
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 process/pause_mode = 2
-transform/pos = Vector2( 389.067, 262.552 )
+transform/pos = Vector2( 744.517, 784.909 )
 
 [node name="Block1" parent="." instance=ExtResource( 3 )]
 
@@ -60,10 +60,30 @@ transform/pos = Vector2( 760.584, 213.054 )
 
 [node name="Artillery" parent="." instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 1112.75, 422.945 )
+transform/pos = Vector2( 1975.06, 193.536 )
 
 [node name="Artillery1" parent="." instance=ExtResource( 4 )]
 
-transform/pos = Vector2( 1101.36, 646.837 )
+transform/pos = Vector2( 1796.76, 129.977 )
+
+[node name="Artillery2" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 1665.54, -1.26068 )
+
+[node name="Artillery3" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 1784.44, 1553.39 )
+
+[node name="Artillery4" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( 1377.33, 1790.69 )
+
+[node name="Artillery5" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( -376.78, 1544.88 )
+
+[node name="Artillery6" parent="." instance=ExtResource( 4 )]
+
+transform/pos = Vector2( -58.2482, 1737.63 )
 
 
